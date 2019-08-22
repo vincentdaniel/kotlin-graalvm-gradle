@@ -1,0 +1,10 @@
+FROM openjdk:12.0 AS builder
+
+ADD . .
+RUN ./gradlew shadowJar
+
+FROM openjdk:12.0
+
+COPY --from=builder build/libs/kotlin-graalvm-gradle-1.0-SNAPSHOT-all.jar .
+
+CMD java -jar kotlin-graalvm-gradle-1.0-SNAPSHOT-all.jar
